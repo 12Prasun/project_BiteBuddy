@@ -1,5 +1,8 @@
 import React from 'react'
 import {useCart, useDispatchCart} from '../components/ContextReducer';
+import './Cart.css';
+
+
 export default function Cart() {
   let data = useCart();
   let dispatch = useDispatchCart();
@@ -10,17 +13,17 @@ export default function Cart() {
     </div>
 )
  }
- const handleRemove = (index)=>{
+/* const handleRemove = (index)=>{
    console.log(index)
    dispatch({type:"REMOVE",index:index})
- }
+ }*/
 
  const handleCheckOut = async () => {
  let userEmail = localStorage.getItem("userEmail");
  console.log(data,localStorage.getItem("userEmail"),new Date())
-let response = await fetch("http://localhost:5000/api/auth/orderData", {
-     credentials: 'include',
-     Origin:"http://localhost:3000/login",
+let response = await fetch("http://localhost:5000/api/orderData", {
+     //credentials: 'include',
+    // Origin:"http://localhost:3000/login",
     method: 'POST',
     headers: {
     'Content-Type': 'application/json'
@@ -54,7 +57,7 @@ let totalPrice = data.reduce((total, food) => total + food.price, 0)
               <th scope='col' ></th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className='tbody'>
             {data.map((food, index) => (
               <tr>
                 <th scope='row text-white' >{index + 1}</th>
@@ -62,13 +65,15 @@ let totalPrice = data.reduce((total, food) => total + food.price, 0)
                 <td>{food.qty}</td>
                 <td>{food.size}</td>
                 <td>{food.price}</td>
-                <td ><button type="button" className="btn p-0"><img src="trash.jpeg"   alt="delete" onClick={() => { dispatch({ type: "REMOVE", index: index }) }} /></button> </td></tr>
+                <td ><button type="button" className="btn p-0"><img src="trash.jpeg"   alt="delete" onClick={() => { dispatch({ type: "REMOVE", index: index }) }} /></button> 
+                </td>
+              </tr>
             ))}
 
             
           </tbody>
         </table>
-        <div><h1 className='fs-2 text-white'>Total Price: {totalPrice}/-</h1></div>
+        <div><h1 className='fs-2 text-success'>Total Price: {totalPrice}/-</h1></div>
         <div>
             <button className='btn bg-success mt-5' onClick={handleCheckOut}>Check Out</button>
         </div>
