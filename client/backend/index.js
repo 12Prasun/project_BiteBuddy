@@ -15,6 +15,21 @@ app.use(express.json())
 app.use('/api', require("./Routes/CreateUser"));
 app.use('/api', require("./Routes/DisplayData"));
 app.use('/api', require("./Routes/OrderData"));
+const __dirname1=path.resolve();
+if(process.env.NODE_ENV === "production")
+{
+  app.use(express.static(path.join(__dirname1,"/frontend/build")));
+
+  app.get("*",(req,res)=>{
+    res.sendFile(path.resolve(__dirname1,"frontend","build","index.html"));
+})
+}
+else{
+  app.get("/", (req, res) => {
+  res.send("API is running successfully");
+    
+});
+}
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
