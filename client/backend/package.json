@@ -6,7 +6,7 @@
   "scripts": {
     "start":"node client/backend/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build":"npm install && npm install --prefix client/backend && npm run build --prefix client/backend"
+   
   },
   "author": "end to end",
   "license": "ISC",
